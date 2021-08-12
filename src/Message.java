@@ -13,7 +13,11 @@ public abstract class Message {
 
     public Message(User sender) {
         this.date = LocalDate.now();
-        /* TODO */
+        if (sender.equals(null)){
+            throw IllegalArgumentException("sender is null");
+        } else{
+            this.sender = sender;
+        }
     }
 
     public LocalDate getDate() {
@@ -21,8 +25,7 @@ public abstract class Message {
     }
 
     public User getSender() {
-        /* TODO */
-        return null;
+        return this.sender;
     }
 
     public abstract String getContents();

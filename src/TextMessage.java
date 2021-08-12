@@ -9,12 +9,19 @@ public class TextMessage extends Message {
 
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
-        /* TODO */
+        super.message(sender);
+        if (text.length() > 500) {
+            throw OperationDeniedException("EXCEED_MAX_LENGTH");
+        } else if (text.equal(null) || sender.equal(null)) {
+            throw IllegalArgumentException("sender or text is null");
+        }
+        String content = text;
     }
 
     // Yuxuan [16:38:36.868882500]: A sample text message.
     public String getContents() {
-        /* TODO */
+        String senderName = this.sender.displayname();
+        String contentDate = date.toString()
         return null;
     }
 
