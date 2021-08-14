@@ -1,3 +1,7 @@
+/*
+    Name: Edwin Tse
+    PID:  A16616338
+ */
 public class TextMessage extends Message {
 
     // Error message to use in OperationDeniedException
@@ -9,20 +13,20 @@ public class TextMessage extends Message {
 
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
-        super.message(sender);
-        if (text.length() > 500) {
-            throw OperationDeniedException("EXCEED_MAX_LENGTH");
-        } else if (text.equal(null) || sender.equal(null)) {
-            throw IllegalArgumentException("sender or text is null");
+        super(sender);
+        if (text.length() > MAX_TEXT_LENGTH) {
+            throw new OperationDeniedException(EXCEED_MAX_LENGTH);
+        } else if (text == null || sender == null) {
+            throw new IllegalArgumentException("sender or text is null");
         }
-        String content = text;
+        contents = text;
     }
 
     // Yuxuan [16:38:36.868882500]: A sample text message.
     public String getContents() {
-        String senderName = this.sender.displayname();
-        String contentDate = date.toString()
-        return null;
+        String senderName = this.getSender().displayName();
+        String contentDate = this.getDate().toString();
+        return senderName + " [" + contentDate + "]: " + contents;
     }
 
 }

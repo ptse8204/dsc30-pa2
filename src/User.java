@@ -14,16 +14,22 @@ public abstract class User {
     protected ArrayList<MessageExchange> rooms;
 
     public User(String username, String bio) {
-        /* TODO */
+        if (username == null || bio == null) {
+            throw new IllegalArgumentException("username or bio is null.");
+        }
+        this.username = username;
+        this.bio = bio;
     }
 
     public void setBio(String newBio) {
-        /* TODO */
+        if (newBio == null) {
+            throw new IllegalArgumentException("newBio is null");
+        }
+        this.bio = newBio;
     }
 
     public String displayBio() {
-        /* TODO */
-        return null;
+        return this.bio;
     }
 
     public void joinRoom(MessageExchange me) throws OperationDeniedException {

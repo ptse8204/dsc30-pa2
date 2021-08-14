@@ -1,5 +1,13 @@
+/*
+    Name: Edwin Tse
+    PID:  A16616338
+ */
+
 import java.time.LocalDate;
 
+/*
+    Message class info
+ */
 public abstract class Message {
 
     // Error message to use in OperationDeniedException
@@ -13,8 +21,8 @@ public abstract class Message {
 
     public Message(User sender) {
         this.date = LocalDate.now();
-        if (sender.equals(null)){
-            throw IllegalArgumentException("sender is null");
+        if (sender == null) {
+            throw new IllegalArgumentException("sender is null");
         } else{
             this.sender = sender;
         }

@@ -11,7 +11,7 @@ public class Student extends User {
     private static final int MAX_MSG_SIZE = 100;
 
     public Student(String username, String bio) {
-        /* TODO */
+        super(username, bio);
     }
 
     public String fetchMessage(MessageExchange me) {
@@ -20,7 +20,6 @@ public class Student extends User {
     }
 
     public String displayName() {
-        /* TODO */
-        return null;
+        return this.username;
     }
 }

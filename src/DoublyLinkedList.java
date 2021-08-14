@@ -1,6 +1,6 @@
 /*
- * NAME: TODO First Last
- * PID: TODO Axxxxxxxx
+ * NAME: Edwin Tse
+ * PID: A16616338
  */
 
 import java.util.AbstractList;
@@ -19,6 +19,7 @@ import java.util.LinkedList;
     private int nelems;
     private Node head;
     private Node tail;
+    private LinkedList<Node> outLinkedL;
 
     /**
      * Node for chaining together to create a linked list
@@ -32,7 +33,7 @@ import java.util.LinkedList;
          * Constructor to create singleton Node
          */
         private Node(int element) {
-            // TODO: complete constructor
+            this.data = element;
         }
 
         /**
@@ -43,7 +44,9 @@ import java.util.LinkedList;
          * @param prevNode predecessor Node, can be null
          */
         private Node(int element, Node nextNode, Node prevNode) {
-            // TODO: complete implementation
+            this.data = element;
+            this.next = nextNode;
+            this.prev = prevNode;
         }
 
         /**
@@ -52,7 +55,7 @@ import java.util.LinkedList;
          * @param p new previous node
          */
         public void setPrev(Node p) {
-            // TODO: complete implementation
+            this.prev = p;
         }
 
         /**
@@ -61,7 +64,7 @@ import java.util.LinkedList;
          * @param n new next node
          */
         public void setNext(Node n) {
-            // TODO: complete implementation
+            this.next = n;
         }
 
         /**
@@ -70,35 +73,38 @@ import java.util.LinkedList;
          * @param e new element
          */
         public void setElement(int e) {
-            // TODO: complete implementation
+            this.data = e;
         }
 
         /**
          * Accessor to get the next Node in the list
          */
         public Node getNext() {
-            return null; // TODO: complete implementation
+            return this.next;
         }
 
         /**
          * Accessor to get the prev Node in the list
          */
         public Node getPrev() {
-            return null; // TODO: complete implementation
+            return this.prev;
         }
 
         /**
          * Accessor to get the Nodes Element
          */
         public int getElement() {
-            return 0; // TODO: complete implementation
+            return this.data;
         }
 
         /**
          * Remove this node from the list. Update previous and next nodes
          */
         public void remove() {
-            // TODO: complete implementation
+            Node before = this.prev;
+            Node after = this.next;
+            before.setNext(after);
+            after.setPrev(before);
         }
     }
 
@@ -106,7 +112,12 @@ import java.util.LinkedList;
      * Creates a new, empty doubly-linked list.
      */
     public DoublyLinkedList() {
-        // TODO: complete default constructor
+        this.head = new Node(0);
+        this.tail = new Node(1);
+        this.nelems = 0;
+        outLinkedL = new LinkedList<Node>();
+        outLinkedL.add(0, head);
+        outLinkedL.add(1, tail);
     }
 
     /**
@@ -115,8 +126,7 @@ import java.util.LinkedList;
      * @return Number of elements currently on the list
      */
     public int size() {
-        // TODO: complete implementation
-        return 0;
+        return this.nelems;
     }
 
     /**
@@ -128,8 +138,10 @@ import java.util.LinkedList;
      *                                   the current list.
      */
     public int get(int index) throws IndexOutOfBoundsException {
-        // TODO: Fill in implementation to get the node at index
-        return 0;
+        if (index < 0 || index > size() - 1) {
+            throw new IndexOutOfBoundsException("index is outside the range [0, size - 1]");
+        }
+        return outLinkedL.get(index + 1).getElement();
     }
 
     /**
@@ -138,7 +150,13 @@ import java.util.LinkedList;
      * @param data data to be added
      */
     public boolean add(int data) {
-        // TODO: complete implementation
+        Node previNode = outLinkedL.get(size());
+        Node endNode = outLinkedL.get(size() + 1);
+        Node newNode = new Node (data, endNode, previNode);
+        previNode.setNext(newNode);
+        endNode.setPrev(newNode);
+        outLinkedL.add(size() + 1, newNode);
+        this.nelems += 1;
         return true;
     }
 
@@ -153,7 +171,16 @@ import java.util.LinkedList;
      */
     public void add(int index, int data)
             throws IndexOutOfBoundsException {
-        // TODO: complete implementation
+        if (index < 0 || index > size()) {
+            throw new IndexOutOfBoundsException("index is outside the range [0, size]");
+        }
+        Node beforeNode = outLinkedL.get(index);
+        Node afterNode = outLinkedL.get(index + 1);
+        Node newNode = new Node(data, afterNode, beforeNode);
+        beforeNode.setNext(newNode);
+        afterNode.setPrev(newNode);
+        outLinkedL.add(index + 1, newNode);
+        this.nelems += 1;
     }
 
     /**
@@ -167,8 +194,17 @@ import java.util.LinkedList;
      */
     public int set(int index, int data)
             throws IndexOutOfBoundsException {
-        // TODO: Fill in implementation
-        return 0;
+        if (index < 0 || index > size() - 1) {
+            throw new IndexOutOfBoundsException("index is outside the range [0, size - 1]");
+        }
+        Node beforeNode = outLinkedL.get(index);
+        Node afterNode = outLinkedL.get(index + 2);
+        Node alterNode = outLinkedL.get(index + 1);
+        Node newNode = new Node(data, afterNode, beforeNode);
+        beforeNode.setNext(newNode);
+        afterNode.setPrev(newNode);
+        outLinkedL.set(index + 1, newNode);
+        return alterNode.getElement();
     }
 
     /**
@@ -178,15 +214,26 @@ import java.util.LinkedList;
      * @throws IndexOutOfBoundsException if index<0 || index >= size
      */
     public int remove(int index) throws IndexOutOfBoundsException {
-        // TODO: Fill in implementation
-        return 0;
+        if (index < 0 || index > size() - 1) {
+            throw new IndexOutOfBoundsException("index is outside the range [0, size - 1]");
+        }
+        Node removeNode = outLinkedL.get(index + 1);
+        removeNode.remove();
+        this.nelems -= 1;
+        return outLinkedL.remove(index + 1).getElement();
     }
 
     /**
      * Clear the linked list
      */
     public void clear() {
-        // TODO: implement clear
+        outLinkedL.clear();
+        this.head = new Node(0);
+        this.tail = new Node(1);
+        this.nelems = 0;
+        outLinkedL = new LinkedList<Node>();
+        outLinkedL.add(head);
+        outLinkedL.add(tail);
     }
 
     /**
@@ -195,14 +242,17 @@ import java.util.LinkedList;
      * @return true if empty, false otherwise
      */
     public boolean isEmpty() {
-        // TODO: implement isEmpty
-        return true;
+        int emptyVal = 0;
+        if (this.nelems == emptyVal) {
+            return true;
+        } else{
+            return false;
+        }
     }
 
     // Helper method to get the Node at the Nth index
     private Node getNth(int index) {
-        // TODO: implement
-        return null;
+        return outLinkedL.get(index);
     }
 
     /**
@@ -210,8 +260,13 @@ import java.util.LinkedList;
      * @param data data to find
      * @return true if list contains given data, false otherwise
      */
-    public boolean contains(Object data) {
-        // TODO: Fill in implementation
+    public boolean contains(int element) {
+        for (int listIndex = 1; listIndex < size() - 1; listIndex++) {
+            int currentElement = outLinkedL.get(listIndex).getElement();
+            if (element == currentElement){
+                return true;
+            }
+        }
         return false;
     }
 
@@ -222,6 +277,12 @@ import java.util.LinkedList;
      */
     @Override
     public String toString() {
-        return null;
+        String returnString = "[(head)";
+        String arrowSpace = " -> ";
+        for (int listIndex = 1; listIndex < size() - 1; listIndex++){
+            returnString += arrowSpace + String.valueOf(outLinkedL.get(listIndex).getElement());
+        }
+        returnString += arrowSpace + "(tail)]";
+        return returnString;
     }
 }

@@ -8,31 +8,30 @@ public class DLLQueue {
     private DoublyLinkedList queue;
 
     public DLLQueue() {
-        /* TODO */
+        this.queue = new DoublyLinkedList();
     }
 
     public int size() {
-        /* TODO */
-        return 0;
+        return this.queue.size();
     }
 
     public boolean isEmpty() {
-        /* TODO */
-        return false;
+        return this.queue.isEmpty();
     }
 
     public void enqueue(int data) {
-        /* TODO */
+        this.queue.add(data);
     }
 
     public int dequeue() {
-        /* TODO */
-        return 0;
+        if (isEmpty()){
+            throw new NoSuchElementException();
+        }
+        return this.queue.remove(0);
     }
 
     public int peek() {
-        /* TODO */
-        return 0;
+        return this.queue.get(0);
     }
 
 }

@@ -6,7 +6,8 @@ public class Tutor extends User {
     private String customTitle;
 
     public Tutor(String username, String bio) {
-        /* TODO */
+        super(username, bio);
+        this.customTitle = "Tutor";
     }
 
     public String fetchMessage(MessageExchange me) {
@@ -15,8 +16,9 @@ public class Tutor extends User {
     }
 
     public String displayName() {
-        /* TODO */
-        return null;
+        String strUsername = this.username;
+        String strTitle = "<" + this.customTitle + "> ";
+        return strTitle + strUsername;
     }
 
     public void setCustomTitle(String newTitle) {
