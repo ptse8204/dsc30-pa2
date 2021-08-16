@@ -7,6 +7,8 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+//toString(), Contain
+
 /**
  * Doubly-Linked List Implementation
  *

@@ -33,15 +33,76 @@ public abstract class User {
     }
 
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
-        /* TODO */
+        if (me == null){
+            throw new IllegalArgumentException("the me is null");
+        }
+        for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++){
+            MessageExchange currentRoom = this.rooms.get(roomIndex);
+            if (currentRoom == me){
+                throw new OperationDeniedException(JOIN_ROOM_FAILED);
+            }
+        }
+        boolean joinRoomChecker = this.rooms.add(me);
+        if (joinRoomChecker == false){
+            throw new OperationDeniedException(JOIN_ROOM_FAILED);
+        }
+        this.rooms.add(me);
     }
 
     public void quitRoom(MessageExchange me) {
-        /* TODO */
+        if (me == null){
+            throw new IllegalArgumentException("the me is null");
+        }
+        boolean quitRoomChecker = false;
+        for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++) {
+            MessageExchange currentRoom = this.rooms.get(roomIndex);
+            if (currentRoom == me) {
+                quitRoomChecker = true;
+            }
+        }
+        if (quitRoomChecker) {
+            me.removeUser(User.this, User.this);
+            int removeIndex = this.rooms.indexOf(me);
+            this.rooms.remove(removeIndex);
+        }
     }
 
     public void sendMessage(MessageExchange me, String contents, int lines) {
-        /* TODO */
+        Message messageSend;
+        if (me == null || contents == null){
+            throw new IllegalArgumentException("me or contents is null");
+        }
+        boolean roomChecker = false;
+        for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++) {
+            MessageExchange currentRoom = this.rooms.get(roomIndex);
+            if (currentRoom == me) {
+                roomChecker = true;
+            }
+        }
+        if (roomChecker == false) {
+            throw new IllegalArgumentException("user didn’t join me");
+        }
+        if (lines == -1) {
+            try {
+                new TextMessage(User.this, contents);
+            }
+            catch (Exception theException){
+                System.out.println(theException.getMessage());
+                //System.exit();
+            }
+            messageSend = new TextMessage(User.this, contents);
+        }
+        else {
+            try {
+                new CodeMessage(User.this, contents, lines);
+            }
+            catch (Exception theException){
+                System.out.println(theException.getMessage());
+                //System.exit();
+            }
+            messageSend = new CodeMessage(User.this, contents, lines);
+        }
+        me.recordMessage(messageSend);
     }
 
     public abstract String fetchMessage(MessageExchange me);

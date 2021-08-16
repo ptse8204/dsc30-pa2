@@ -14,10 +14,10 @@ public class TextMessage extends Message {
     public TextMessage(User sender, String text)
             throws OperationDeniedException {
         super(sender);
-        if (text.length() > MAX_TEXT_LENGTH) {
-            throw new OperationDeniedException(EXCEED_MAX_LENGTH);
-        } else if (text == null || sender == null) {
+        if (text == null || sender == null) {
             throw new IllegalArgumentException("sender or text is null");
+        } else if (text.length() > MAX_TEXT_LENGTH) {
+            throw new OperationDeniedException(EXCEED_MAX_LENGTH);
         }
         contents = text;
     }

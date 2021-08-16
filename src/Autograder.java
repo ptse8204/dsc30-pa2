@@ -22,7 +22,8 @@ public class Autograder implements MessageExchange {
     private Tutor tutor;
 
     public Autograder(Tutor tutor) {
-        /* TODO */
+        this.tutor = tutor;
+        this.users.add(tutor);
     }
 
     public ArrayList<Message> getLog(User requester) {
@@ -31,23 +32,38 @@ public class Autograder implements MessageExchange {
     }
 
     public boolean addUser(User u) {
-        /* TODO */
-        return false;
+        if (users.contains(u)) {
+            return false;
+        }
+        else {
+            users.add(u);
+            u.joinRoom(Autograder.this);
+            return true;
+        }
     }
 
     public boolean removeUser(User requester, User u) {
-        /* TODO */
+        boolean roomCheck = false;
+        if (requester == u) {
+            roomCheck = true;
+        } else if (requester instanceof Tutor) {
+            roomCheck = true;
+        }
+        if (roomCheck && this.users.contains(u)) {
+            this.users.remove(u);
+            u.quitRoom(Autograder.this);
+            return true;
+        }
         return false;
     }
 
     public ArrayList<User> getUsers() {
-        /* TODO */
-        return null;
+        return this.users
     }
 
     public boolean recordMessage(Message m) {
-        /* TODO */
-        return false;
+        this.log.add(m);
+        return true;
     }
 
     public String resolveAllProblems(User requester) {

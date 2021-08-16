@@ -39,7 +39,7 @@ public class CodeMessage extends Message {
             if (extension.contains(currentExtension)){
                 throwError = false;
                 extensionIndex = extension.indexOf(currentExtension);
-                this.extension = extension.substring(0, extensionIndex);
+                this.extension = ACCEPTABLE_EXTENSIONS[acceptIndex];
             }
         }
         if (throwError) {
