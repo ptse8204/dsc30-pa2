@@ -15,7 +15,7 @@ import static org.junit.Assert.*;
 
 public class DoublyLinkedListTest {
     @Test (expected = IndexOutOfBoundsException.class)
-    public void test (){
+    public void test() {
         DoublyLinkedList dllnewlst = new DoublyLinkedList();
         assertEquals(true, dllnewlst.add(10));
         assertEquals(false, dllnewlst.isEmpty());
@@ -41,7 +41,7 @@ public class DoublyLinkedListTest {
         dllnewlst.get(7);
     }
     @Test (expected = IndexOutOfBoundsException.class)
-    public void test1 () {
+    public void test1() {
         DoublyLinkedList dllnewlst = new DoublyLinkedList();
         assertEquals(true, dllnewlst.add(10));
         assertEquals(false, dllnewlst.isEmpty());
@@ -51,7 +51,7 @@ public class DoublyLinkedListTest {
     }
 
     @Test (expected = IndexOutOfBoundsException.class)
-    public void test2 () {
+    public void test2() {
         DoublyLinkedList dllnewlst = new DoublyLinkedList();
         assertEquals(true, dllnewlst.add(10));
         assertEquals(false, dllnewlst.isEmpty());
@@ -60,7 +60,7 @@ public class DoublyLinkedListTest {
         dllnewlst.set(1, 3);
     }
     @Test (expected = IndexOutOfBoundsException.class)
-    public void test3 () {
+    public void test3() {
         DoublyLinkedList dllnewlst = new DoublyLinkedList();
         assertEquals(true, dllnewlst.add(10));
         assertEquals(false, dllnewlst.isEmpty());
