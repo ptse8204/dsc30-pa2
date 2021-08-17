@@ -12,12 +12,13 @@ import java.util.LinkedList;
 /**
  * Doubly-Linked List Implementation
  *
- * @author TODO
- * @since TODO
+ * @author Edwin Tse
+ * @since 1.2
  */
 
     public class DoublyLinkedList {
 
+    // Declaring instance variables
     private int nelems;
     private Node head;
     private Node tail;
@@ -259,13 +260,12 @@ import java.util.LinkedList;
 
     /**
      * Determine if this list contains the given data
-     * @param data data to find
+     * @param element to find
      * @return true if list contains given data, false otherwise
      */
     public boolean contains(int element) {
         for (int listIndex = 1; listIndex < size() + 1; listIndex++) {
             int currentElement = outLinkedL.get(listIndex).getElement();
-            System.out.println(currentElement);
             if (element == currentElement) {
                 return true;
             }

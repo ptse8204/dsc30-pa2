@@ -5,6 +5,10 @@
 
 import java.util.ArrayList;
 
+/**
+ * The User class is the abstract class that defines the functionality of a user in our messaging
+ * app
+ */
 public abstract class User {
 
     // Error message to use in OperationDeniedException
@@ -18,6 +22,12 @@ public abstract class User {
     protected String bio;
     protected ArrayList<MessageExchange> rooms = new ArrayList<MessageExchange>();
 
+    /**
+     * The constructor of the User class
+     * @param username String name of the user
+     * @param bio Strng bio of the user
+     * @throws IllegalArgumentException if username or bio is null
+     */
     public User(String username, String bio) {
         if (username == null || bio == null) {
             throw new IllegalArgumentException("username or bio is null.");
@@ -26,6 +36,11 @@ public abstract class User {
         this.bio = bio;
     }
 
+    /**
+     * This method updates the class variable bio with a new one.
+     * @param newBio String of the newBio
+     * @throws IllegalArgumentException if newBio is null
+     */
     public void setBio(String newBio) {
         if (newBio == null) {
             throw new IllegalArgumentException("newBio is null");
@@ -33,10 +48,21 @@ public abstract class User {
         this.bio = newBio;
     }
 
+    /**
+     * Returns the bio.
+     * @return String bio
+     */
     public String displayBio() {
         return this.bio;
     }
 
+    /**
+     * This method attempts to join this user to the MessageExchange me.
+     * @param me MessageExchange the room that the user wanted to join
+     * @throws OperationDeniedException if the room is already in the list of rooms of this user,
+     * or the joining failed as the addUser()suggests
+     * @throws IllegalArgumentException if me is null
+     */
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
         if (me == null) {
             throw new IllegalArgumentException("the me is null");
@@ -54,6 +80,14 @@ public abstract class User {
         this.rooms.add(me);
     }
 
+    /**
+     * Removes the message exchange platform from the list of rooms that this user is a member of
+     * and removes the user from the list of users recorded in the MessageExchange object.
+     *
+     * If the user is not in the list of users, this operation does nothing.
+     * @param me MessageExchange the room that the user wants to exit
+     * @throws IllegalArgumentException if me is null
+     */
     public void quitRoom(MessageExchange me) {
         if (me == null) {
             throw new IllegalArgumentException("the me is null");
@@ -72,6 +106,13 @@ public abstract class User {
         }
     }
 
+    /**
+     * Create an instance of a message and then send this message to the MessageExchange room.
+     * @param me the room that user wanted to send message to
+     * @param contents the message string
+     * @param lines lines of code message, = -1 if otherwise
+     * @throws IllegalArgumentException if me or contents is null or user didn’t join me
+     */
     public void sendMessage(MessageExchange me, String contents, int lines) {
         if (me == null || contents == null) {
             throw new IllegalArgumentException("me or contents is null");
