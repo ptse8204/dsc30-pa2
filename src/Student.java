@@ -1,3 +1,8 @@
+/*
+  Name: Edwin Tse
+  PID:  A16616338
+ */
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,9 +20,7 @@ public class Student extends User {
     }
 
     public String fetchMessage(MessageExchange me) {
-        int logSize;
-        int starter;
-        String returnString;
+        String returnString = "";
         boolean roomChecker;
         ArrayList<Message> meLog;
         if (me == null) {
@@ -34,19 +37,12 @@ public class Student extends User {
             throw new IllegalArgumentException("user is not in the room me");
         }
         meLog = me.getLog(Student.this);
-        logSize = meLog.size();
-        if (logSize < 100) {
-            starter = 0;
-        }
-        else {
-            starter = logSize - 100;
-        }
-        for (int messageIndex = starter; messageIndex < logSize; messageIndex++) {
-            if (meLog.get(messageIndex) instanceof TextMessage) {
+        for (int messageIndex = 0; messageIndex < meLog.size(); messageIndex++) {
+            if (meLog.get(messageIndex).getClass() == TextMessage.class) {
                 returnString += meLog.get(messageIndex).getContents() + "\n";
             }
             else {
-                returnString += FETCH_DENIED_MSG;
+                returnString += FETCH_DENIED_MSG + "\n";
             }
         }
         return returnString;

@@ -16,6 +16,6 @@ public class Runtest {
         System.out.println(errorUser.displayName());
         errorUser.setCustomTitle("COVID");
         System.out.println(errorUser.displayName());
-        //TextMessage testTextMessage = new TextMessage(null, "Tough");
+        new Autograder(errorUser);
     }
 }

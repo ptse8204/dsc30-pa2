@@ -7,7 +7,7 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-//toString(), Contain
+//toString()
 
 /**
  * Doubly-Linked List Implementation
@@ -263,9 +263,10 @@ import java.util.LinkedList;
      * @return true if list contains given data, false otherwise
      */
     public boolean contains(int element) {
-        for (int listIndex = 1; listIndex < size() - 1; listIndex++) {
+        for (int listIndex = 1; listIndex < size() + 1; listIndex++) {
             int currentElement = outLinkedL.get(listIndex).getElement();
-            if (element == currentElement){
+            System.out.println(currentElement);
+            if (element == currentElement) {
                 return true;
             }
         }
@@ -281,7 +282,7 @@ import java.util.LinkedList;
     public String toString() {
         String returnString = "[(head)";
         String arrowSpace = " -> ";
-        for (int listIndex = 1; listIndex < size() - 1; listIndex++){
+        for (int listIndex = 1; listIndex < size() + 1; listIndex++){
             returnString += arrowSpace + String.valueOf(outLinkedL.get(listIndex).getElement());
         }
         returnString += arrowSpace + "(tail)]";

@@ -1,3 +1,8 @@
+/*
+  Name: Edwin Tse
+  PID:  A16616338
+ */
+
 import java.util.Locale;
 
 public class CodeMessage extends Message {

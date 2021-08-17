@@ -1,3 +1,8 @@
+/*
+  Name: Edwin Tse
+  PID:  A16616338
+ */
+
 import java.util.ArrayList;
 
 public abstract class User {
@@ -11,7 +16,7 @@ public abstract class User {
     // instance variables
     protected String username;
     protected String bio;
-    protected ArrayList<MessageExchange> rooms;
+    protected ArrayList<MessageExchange> rooms = new ArrayList<MessageExchange>();
 
     public User(String username, String bio) {
         if (username == null || bio == null) {
@@ -33,24 +38,24 @@ public abstract class User {
     }
 
     public void joinRoom(MessageExchange me) throws OperationDeniedException {
-        if (me == null){
+        if (me == null) {
             throw new IllegalArgumentException("the me is null");
         }
-        for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++){
+        for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++) {
             MessageExchange currentRoom = this.rooms.get(roomIndex);
-            if (currentRoom == me){
+            if (currentRoom == me) {
                 throw new OperationDeniedException(JOIN_ROOM_FAILED);
             }
         }
         boolean joinRoomChecker = this.rooms.add(me);
-        if (joinRoomChecker == false){
+        if (!joinRoomChecker) {
             throw new OperationDeniedException(JOIN_ROOM_FAILED);
         }
         this.rooms.add(me);
     }
 
     public void quitRoom(MessageExchange me) {
-        if (me == null){
+        if (me == null) {
             throw new IllegalArgumentException("the me is null");
         }
         boolean quitRoomChecker = false;
@@ -68,39 +73,32 @@ public abstract class User {
     }
 
     public void sendMessage(MessageExchange me, String contents, int lines) {
-        Message messageSend;
-        if (me == null || contents == null){
+        if (me == null || contents == null) {
             throw new IllegalArgumentException("me or contents is null");
         }
         boolean roomChecker = false;
+        Message messageSend = null;
         for (int roomIndex = 0; roomIndex < this.rooms.size(); roomIndex++) {
             MessageExchange currentRoom = this.rooms.get(roomIndex);
             if (currentRoom == me) {
                 roomChecker = true;
             }
         }
-        if (roomChecker == false) {
+        if (!roomChecker) {
             throw new IllegalArgumentException("user didn’t join me");
         }
         if (lines == -1) {
             try {
-                new TextMessage(User.this, contents);
-            }
-            catch (Exception theException){
+                messageSend = new TextMessage(User.this, contents);
+            } catch (OperationDeniedException theException) {
                 System.out.println(theException.getMessage());
-                //System.exit();
             }
-            messageSend = new TextMessage(User.this, contents);
-        }
-        else {
+        } else {
             try {
-                new CodeMessage(User.this, contents, lines);
-            }
-            catch (Exception theException){
+                messageSend = new CodeMessage(User.this, contents, lines);
+            } catch (OperationDeniedException theException) {
                 System.out.println(theException.getMessage());
-                //System.exit();
             }
-            messageSend = new CodeMessage(User.this, contents, lines);
         }
         me.recordMessage(messageSend);
     }

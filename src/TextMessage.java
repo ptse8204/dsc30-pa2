@@ -2,6 +2,7 @@
     Name: Edwin Tse
     PID:  A16616338
  */
+
 public class TextMessage extends Message {
 
     // Error message to use in OperationDeniedException

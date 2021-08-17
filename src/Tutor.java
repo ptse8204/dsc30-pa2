@@ -1,3 +1,8 @@
+/*
+  Name: Edwin Tse
+  PID:  A16616338
+ */
+
 import java.util.ArrayList;
 
 public class Tutor extends User {
@@ -11,8 +16,6 @@ public class Tutor extends User {
     }
 
     public String fetchMessage(MessageExchange me) {
-        String returnString;
-        int logSize;
         boolean roomChecker;
         ArrayList<Message> meLog;
         if (me == null) {
@@ -25,11 +28,12 @@ public class Tutor extends User {
                 roomChecker = true;
             }
         }
-        if (roomChecker == false) {
+        if (!roomChecker) {
             throw new IllegalArgumentException("user is not in the room me");
         }
         meLog = me.getLog(Tutor.this);
-        logSize = meLog.size();
+        int logSize = meLog.size();
+        String returnString = "";
         for (int messageIndex = 0; messageIndex < logSize; messageIndex++) {
             returnString += meLog.get(messageIndex).getContents() + "\n";
         }
@@ -46,10 +50,20 @@ public class Tutor extends User {
         this.customTitle = newTitle;
     }
 
-    // not yet done
     public MessageExchange createAutograder(ArrayList<User> users) {
-        Autograder newAutograder = new Autograder();
-
+        if (users == null) {
+            throw new IllegalArgumentException("users is null");
+        }
+        Autograder newAutograder = new Autograder(Tutor.this);
+        for (int userIndex = 0; userIndex < users.size(); userIndex++) {
+            User currentUser = users.get(userIndex);
+            try {
+                currentUser.joinRoom(newAutograder);
+            } catch (Exception theException) {
+                System.out.println(theException.getMessage());
+            }
+        }
+        return newAutograder;
     }
 
 }

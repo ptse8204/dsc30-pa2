@@ -1,3 +1,8 @@
+/*
+  Name: Edwin Tse
+  PID:  A16616338
+ */
+
 import java.util.NoSuchElementException;
 
 /**
@@ -31,6 +36,9 @@ public class DLLQueue {
     }
 
     public int peek() {
+        if (isEmpty()){
+            throw new NoSuchElementException();
+        }
         return this.queue.get(0);
     }
 
